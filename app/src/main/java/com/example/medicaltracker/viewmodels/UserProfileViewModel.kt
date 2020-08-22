@@ -1,6 +1,7 @@
 package com.example.medicaltracker.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.medicaltracker.data.User
@@ -13,6 +14,6 @@ class UserProfileViewModel (
 
     val userId : String = "1"
 //    val userId: String = savedStateHandle["uid"] ?: throw IllegalArgumentException("missing user id")
-    val user: LiveData<User> = userRepository.getUser(userId)
+    var user: MutableLiveData<User> = userRepository.getUser(userId)
 }
 

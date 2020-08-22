@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.observe
+import com.example.medicaltracker.data.User
 import com.example.medicaltracker.databinding.FragmentUserProfileBinding
 import com.example.medicaltracker.utilities.InjectorUtils
 import com.example.medicaltracker.viewmodels.UserProfileViewModel
@@ -26,14 +28,19 @@ class UserProfileFragment : Fragment() {
     ): View? {
 
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        binding.userProfileViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.user.observe(viewLifecycleOwner) {
-            binding.userGreeting.text = it.name
-        }
+
+        binding.button.setOnClickListener { viewModel.user.value = User("1", "Bob") }
+
+//        viewModel.user.observe(viewLifecycleOwner) {
+//            binding.userGreeting.text = it.name
+//        }
     }
 
 }
