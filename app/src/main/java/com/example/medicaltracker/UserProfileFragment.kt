@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import com.example.medicaltracker.databinding.FragmentUserProfileBinding
 import com.example.medicaltracker.utilities.InjectorUtils
 import com.example.medicaltracker.viewmodels.UserProfileViewModel
 
 class UserProfileFragment : Fragment() {
 
+    private lateinit var binding : FragmentUserProfileBinding
 
     private val viewModel: UserProfileViewModel by viewModels {
         InjectorUtils.provideUserProfileViewModelFactory(this)
@@ -23,14 +25,14 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false)
+        binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.user.observe(viewLifecycleOwner) {
-            view.findViewById<TextView>(R.id.user_greeting).text = it.name
+            binding.userGreeting.text = it.name
         }
     }
 
