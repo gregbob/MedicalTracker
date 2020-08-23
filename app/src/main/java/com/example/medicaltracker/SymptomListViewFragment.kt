@@ -32,6 +32,10 @@ class SymptomListViewFragment : Fragment() {
                 Symptom("Name", "Now", 10)
             )
         }
+
+        view.findViewById<Button>(R.id.delete_button).setOnClickListener {
+            viewModel.deleteSymptoms()
+        }
     }
 
     override fun onCreateView(

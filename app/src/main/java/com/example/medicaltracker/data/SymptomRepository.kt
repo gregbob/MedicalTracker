@@ -19,4 +19,10 @@ class SymptomRepository(private val symptomDatabase: SymptomDatabase) {
             symptomDatabase.symptomDao.insert(symptom)
         }
     }
+
+    suspend fun deleteSymptoms() {
+        withContext(Dispatchers.IO) {
+            symptomDatabase.symptomDao.clearTable()
+        }
+    }
 }

@@ -15,4 +15,7 @@ interface SymptomDao {
 
     @Query("SELECT * FROM symptoms WHERE id = :id")
     fun getSymptom(id: Long): LiveData<Symptom>
+
+    @Query("DELETE FROM symptoms")
+    fun clearTable()
 }
