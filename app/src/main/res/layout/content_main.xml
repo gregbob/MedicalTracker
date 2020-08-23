@@ -7,8 +7,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    <fragment android:name="com.example.medicaltracker.UserProfileFragment"
-        android:id="@+id/UserProfileFragment"
+    <fragment android:name="com.example.medicaltracker.SymptomListViewFragment"
+        android:id="@+id/SymptomListViewFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
     </fragment>
