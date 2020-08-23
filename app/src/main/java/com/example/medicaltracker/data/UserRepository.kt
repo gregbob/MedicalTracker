@@ -1,14 +1,18 @@
 package com.example.medicaltracker.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.medicaltracker.data.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class UserRepository  {
+class UserRepository(private val userDao: UserDao)  {
 
-    fun getUser(userId: String): MutableLiveData<User> {
-        return MutableLiveData<User>(
-            User(userId, "Greg")
-        )
+    fun getUser(userId: Long): LiveData<User> {
+        return userDao.getUser(userId)
+    }
+
+    suspend fun insertUser(user: User): Long {
+        return withContext(Dispatchers.IO) {
+            return@withContext userDao.insert(user)
+        }
     }
 }

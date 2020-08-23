@@ -1,19 +1,24 @@
 package com.example.medicaltracker.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.medicaltracker.data.User
 import com.example.medicaltracker.data.UserRepository
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 
 class UserProfileViewModel (
-    userRepository: UserRepository,
+    val userRepository: UserRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val userId : String = "1"
-//    val userId: String = savedStateHandle["uid"] ?: throw IllegalArgumentException("missing user id")
-    var user: MutableLiveData<User> = userRepository.getUser(userId)
+    //    val userId: String = savedStateHandle["uid"] ?: throw IllegalArgumentException("missing user id")
+    var userId : Long = -1L
+    val user: LiveData<User> = userRepository.getUser(userId)
+    val userName = Transformations.map(user) { u -> u?.name }
+
+//    fun insertUser(name: String) {
+//        userId = userRepository.insertUser(User(name))
+//    }
+
 }
 

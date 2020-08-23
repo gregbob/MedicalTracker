@@ -36,7 +36,6 @@ class UserProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.button.setOnClickListener { viewModel.user.value = User("1", "Bob") }
 
 //        viewModel.user.observe(viewLifecycleOwner) {
 //            binding.userGreeting.text = it.name
