@@ -1,26 +1,26 @@
 package com.example.medicaltracker.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.medicaltracker.R
 import com.example.medicaltracker.data.Symptom
+import com.example.medicaltracker.databinding.SymptomItemViewBinding
 
-class SymptomAdapter : RecyclerView.Adapter<SymptomAdapter.ViewHolder>() {
-    var data = listOf<Symptom>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
+class SymptomAdapter : ListAdapter<Symptom, SymptomAdapter.ViewHolder>(SymptomDiffCallback()) {
+    class SymptomDiffCallback : DiffUtil.ItemCallback<Symptom>() {
+        override fun areItemsTheSame(oldItem: Symptom, newItem: Symptom): Boolean {
+            return oldItem.id == newItem.id
         }
 
-    override fun getItemCount(): Int {
-        return data.size
+        override fun areContentsTheSame(oldItem: Symptom, newItem: Symptom): Boolean {
+            return oldItem == newItem
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
@@ -28,21 +28,18 @@ class SymptomAdapter : RecyclerView.Adapter<SymptomAdapter.ViewHolder>() {
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val symptomName: TextView = itemView.findViewById(R.id.symptom_name)
-        val symptomTime: TextView = itemView.findViewById(R.id.symptom_date)
-//        val symptomStrength: TextView = itemView.findViewById(R.id.symptom_strength)
+    class ViewHolder private constructor(private val binding: SymptomItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Symptom) {
-            symptomName.text = item.name
-            symptomTime.text = item.time
+            binding.symptom = item
+            binding.executePendingBindings()
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.symptom_item_view, parent, false)
-                return ViewHolder(view)
+                val binding = SymptomItemViewBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
             }
         }
     }
